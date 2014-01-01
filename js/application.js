@@ -20,7 +20,7 @@ function setupDefaultView() {
     var bodyView = viewAssembler.homeView(); 
     
     //Setup the home view
-    var homeView = { title: "Globalisimo.com", 
+    var homeView = { title: "<img src='img/logo_glob.png'>", 
     view:  bodyView,
     };
     
@@ -453,6 +453,7 @@ function onBackKey( event ) {
         window.viewNavigator.popView();
         return false;
     }
+    //Poner else y alert
     navigator.app.exitApp();
 }
 

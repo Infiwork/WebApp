@@ -1,12 +1,19 @@
+#HomeView .row{
+	margin: 0px 10px;
+}
+
 .home-menu{
 	margin: 20px 0px;
 }
+
 .home-menu:active{
 	background-color: #0ff;
 }
+
 .home-menu img{
-	height: 30px;
+	height: 50px;
 }
+
 .home-menu img, .home-menu span{
 	display: block;
 	margin: 10px auto;

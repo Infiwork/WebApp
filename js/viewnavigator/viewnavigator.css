@@ -21,9 +21,13 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .viewNavigator_header {
 	position:absolute;
 	width:100%;
-	height:46px;
+	height:80px;
 	overflow:hide;
 	padding:0px;
+}
+
+.viewNavigator_header img{
+	height: 60px;
 }
 
 .viewNavigator_header_backlink {
@@ -72,7 +76,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 .viewNavigator_content {
 	position:absolute;
-	top:46px;
+	top:80px;
 	left:0px;
 	right:0px;
 	bottom:0px;
