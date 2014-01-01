@@ -224,7 +224,7 @@ function toRad(degree)
     rad = degree* Math.PI/ 180;
     return rad;
 }
-
+*/
 
 function scriptSuccess(data, textStatus, jqXHR) {
 	
@@ -233,7 +233,7 @@ function scriptSuccess(data, textStatus, jqXHR) {
 	}
 	//console.log( "scriptSuccess: " + markets.length );
 }
-
+/*
 
 function onNearbyListItemClick( event ) {
     
@@ -447,6 +447,7 @@ function onDeviceReady() {
 }
 
 function onBackKey( event ) {
+
     if ( window.viewNavigator.history.length > 1 ){
         event.preventDefault();
         window.viewNavigator.popView();
