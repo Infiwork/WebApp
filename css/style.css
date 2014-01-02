@@ -3,15 +3,21 @@
 }
 
 .home-menu{
-	margin: 20px 0px;
+	margin: 10px 0px;
+	padding: 0px;
+	border-radius: 5px;
 }
 
 .home-menu:active{
-	background-color: #0ff;
+	background-color: #AAA;
 }
 
 .home-menu img{
 	height: 50px;
+}
+
+.home-menu span{
+	height: 22px;
 }
 
 .home-menu img, .home-menu span{
