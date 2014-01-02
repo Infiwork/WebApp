@@ -444,6 +444,35 @@ document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
    document.addEventListener("backbutton", onBackKey, false);
+
+   //Config Plugin
+    var config = {
+        app_id      : '624795230912719',
+        secret      : '68be73b8bd77ebab102dd817b88e3a0e',
+        scope       : 'publish_stream,email',
+        host        : 'http://devel.globalisimo.com/fb/facebook.html', //App Domain ( Facebook Developer ).
+        onLogin     : _onLogin,
+        onLogout    : _onLogout
+    };
+    
+    //Login Facebook
+    $(document).FaceGap(config);
+    //Logout Facebook
+    //$(document).FaceGap('logout');
+    
+    //Callback Login
+    function _onLogin( event ){     
+        alert('status > '+event.status); // 1 - success, 0 - error
+        alert('data > '+event.data); //Object response (id, name, email, etc);
+        alert('token > '+event.token); // token user login
+        alert('message > '+event.message);  
+    }
+    
+    //Callback Logout
+    function _onLogout( event ){
+        alert('status > '+event.status); // 1 - success, 0 - error
+        alert('message > '+event.message);
+    }   
 }
 
 function onBackKey( event ) {
@@ -458,3 +487,4 @@ function onBackKey( event ) {
 }
 
 document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
