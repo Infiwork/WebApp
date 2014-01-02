@@ -2,6 +2,7 @@
 var templates = {
     homeViewTemplate:"views/homeViewTemplate.html",
     restaurantesViewTemplate:"views/restaurantesViewTemplate.html",
+    conectErrorViewTemplate:"views/conectErrorViewTemplate.html",
     /*aboutViewTemplate:"views/aboutViewTemplate.html",
     defaultViewTemplate:"views/defaultViewTemplate.html",
     findMarketsNearMeViewTemplate:"views/findMarketsNearMeViewTemplate.html",
@@ -70,8 +71,14 @@ ViewAssembler.prototype.homeView = function() {
     return el;
 }
 
-ViewAssembler.prototype.restaurantesView = function() {
-    var el = $( templates.restaurantesViewTemplate );
+ViewAssembler.prototype.restaurantesView = function(data) {
+    var template = templates.restaurantesViewTemplate ;     
+    var el = $( Mustache.to_html(template, data));
+    return el;
+}
+
+ViewAssembler.prototype.conectErrorView = function() {
+    var el = $( templates.conectErrorViewTemplate );
     return el;
 }
 /*

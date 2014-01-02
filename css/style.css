@@ -1,3 +1,10 @@
+/*
+Estilos pricipal de App
+1.-HomeView
+2.-ListView
+*/
+
+/* 1.- HomeView */
 #HomeView .row{
 	margin: 0px 10px;
 }
@@ -24,4 +31,11 @@
 	display: block;
 	margin: 10px auto;
 	text-align: center;
+}
+
+/* 2.- ListView */
+
+.item-list{
+	border-bottom: 1px #BBB solid;
+	height: 80px;
 }

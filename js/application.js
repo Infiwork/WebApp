@@ -32,13 +32,30 @@ function setupDefaultView() {
 }
 
 function onRestaurantesViewClick( event ) {
-    var view = { title: "Restaurantes",
+   $.ajax({
+        url: 'http://devel.globalisimo.com/globalisimov3/conex1.php?filtro=100',
+        dataType: 'jsonp',
+        jsonp: 'jsoncallback',
+        timeout: 5000,
+        success: function(data, status){
+          var view = { title: "Restaurantes",
              backLabel: (isTablet() ? "Back" : " "),
-             view: viewAssembler.restaurantesView()
+             view: viewAssembler.restaurantesView(data)
            };
-    window.viewNavigator.pushView( view );
-    event.stopPropagation();
+            window.viewNavigator.pushView( view );
+        },
+        error: function(){
+            var view = { title: "Error",
+             backLabel: (isTablet() ? "Back" : " "),
+             view: viewAssembler.conectError()
+           };
+           window.viewNavigator.pushView( view );
+        }
+    });
+    
+    event.stopPropagation();   
     return false;
+ 
 }
 /*
 function setupDefaultView() { 
@@ -443,36 +460,9 @@ function getDirections( index ) {
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
-   document.addEventListener("backbutton", onBackKey, false);
+  document.addEventListener("backbutton", onBackKey, false);
 
-   //Config Plugin
-    var config = {
-        app_id      : '624795230912719',
-        secret      : '68be73b8bd77ebab102dd817b88e3a0e',
-        scope       : 'publish_stream,email',
-        host        : 'http://devel.globalisimo.com/fb/facebook.html', //App Domain ( Facebook Developer ).
-        onLogin     : _onLogin,
-        onLogout    : _onLogout
-    };
-    
-    //Login Facebook
-    $(document).FaceGap(config);
-    //Logout Facebook
-    //$(document).FaceGap('logout');
-    
-    //Callback Login
-    function _onLogin( event ){     
-        alert('status > '+event.status); // 1 - success, 0 - error
-        alert('data > '+event.data); //Object response (id, name, email, etc);
-        alert('token > '+event.token); // token user login
-        alert('message > '+event.message);  
-    }
-    
-    //Callback Logout
-    function _onLogout( event ){
-        alert('status > '+event.status); // 1 - success, 0 - error
-        alert('message > '+event.message);
-    }   
+
 }
 
 function onBackKey( event ) {
