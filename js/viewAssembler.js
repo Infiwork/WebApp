@@ -3,14 +3,10 @@ var templates = {
     homeViewTemplate:"views/homeViewTemplate.html",
     restaurantesViewTemplate:"views/restaurantesViewTemplate.html",
     conectErrorViewTemplate:"views/conectErrorViewTemplate.html",
-    /*aboutViewTemplate:"views/aboutViewTemplate.html",
-    defaultViewTemplate:"views/defaultViewTemplate.html",
-    findMarketsNearMeViewTemplate:"views/findMarketsNearMeViewTemplate.html",
-    geoPermissionDeniedViewTemplate:"views/geoPermissionDeniedViewTemplate.html",
-    mapViewTemplate:"views/mapViewTemplate.html",
-    marketDetailsViewTemplate:"views/marketDetailsViewTemplate.html",
-    marketMapViewTemplate:"views/marketMapViewTemplate.html",
-    marketsNearMeViewTemplate:"views/marketsNearMeViewTemplate.html",
+    conectErrorViewTemplate:"views/conectErrorViewTemplate.html",
+    nextToMeViewTemplate:"views/nextToMeViewTemplate.html",
+    loadingViewTemplate:"views/loadingViewTemplate.html",
+    /*defaultViewTemplate:"views/defaultViewTemplate.html",
     searchResultsViewTemplate:"views/searchResultsViewTemplate.html",
     searchViewTemplate:"views/searchViewTemplate.html",*/
     loaded: 0,
@@ -65,9 +61,8 @@ function ViewAssembler() {
 
 ViewAssembler.prototype.homeView = function() {
     var el = $( templates.homeViewTemplate );
-    //el.find("#nearMe").on( this.CLICK_EVENT, onNearbyViewClick );
-    //el.find("#search").on( this.CLICK_EVENT, onSearchViewClick );
     el.find("#restaurantes").on( this.CLICK_EVENT, onRestaurantesViewClick );
+    el.find("#cerca-de-mi").on( this.CLICK_EVENT, onNextToMeViewClick );
     return el;
 }
 
@@ -81,6 +76,18 @@ ViewAssembler.prototype.conectErrorView = function() {
     var el = $( templates.conectErrorViewTemplate );
     return el;
 }
+
+ViewAssembler.prototype.nextToMeView = function(data) {
+    var template = templates.nextToMeViewTemplate;
+    var el = $( Mustache.to_html(template, data));
+    return el;
+}
+
+ViewAssembler.prototype.loadingView = function() {
+    var el = $( templates.loadingViewTemplate );
+    return el;
+}
+
 /*
 
 

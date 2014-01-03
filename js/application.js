@@ -18,12 +18,11 @@ $(document).ready( function(){
 function setupDefaultView() { 
     
     var bodyView = viewAssembler.homeView(); 
-    
     //Setup the home view
     var homeView = { title: "<img src='img/logo_glob.png'>", 
     view:  bodyView,
+    scroll:false,
     };
-    
     //Setup the ViewNavigator
     window.viewNavigator = new ViewNavigator( 'body' ); 
     window.viewNavigator.pushView( homeView );
@@ -31,7 +30,7 @@ function setupDefaultView() {
     $.getScript("data.js", scriptSuccess);
 }
 
-function onRestaurantesViewClick( event ) {
+function onRestaurantesViewClick(event) {
    $.ajax({
         url: 'http://devel.globalisimo.com/globalisimov3/conex1.php?filtro=100',
         dataType: 'jsonp',
@@ -47,16 +46,132 @@ function onRestaurantesViewClick( event ) {
         error: function(){
             var view = { title: "Error",
              backLabel: (isTablet() ? "Back" : " "),
-             view: viewAssembler.conectError()
+             view: viewAssembler.conectErrorView()
            };
            window.viewNavigator.pushView( view );
         }
     });
-    
     event.stopPropagation();   
     return false;
  
 }
+
+function onNextToMeViewClick( event ) {
+    
+    var view = { title: "Cargando...",
+             backLabel: (isTablet() ? "Back" : " "),
+             view: viewAssembler.loadingView()
+            };
+            window.viewNavigator.pushView( view );
+    event.stopPropagation();
+    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+}
+
+function onSuccess(position) {
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    console.log('Latitude: '           + position.coords.latitude              + '<br />' +
+                'Longitude: '          + position.coords.longitude             + '<br />' +
+                'Altitude: '           + position.coords.altitude              + '<br />' +
+                'Accuracy: '           + position.coords.accuracy              + '<br />' +
+                'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
+                'Heading: '            + position.coords.heading               + '<br />' +
+                'Speed: '              + position.coords.speed                 + '<br />' +
+                'Timestamp: '          + position.timestamp                    + '<br />');
+    $.ajax({
+        url: 'http://devel.globalisimo.com/globalisimov3/conex1.php?filtro=500',
+        dataType: 'jsonp',
+        jsonp: 'jsoncallback',
+        timeout: 5000,
+        success: function(data, status){
+            var newData = filterMarketsByGeo(latitude,longitude,data);
+            var view = { title: "Cerca de mi",
+             backLabel: (isTablet() ? "Back" : " "),
+             view: viewAssembler.nextToMeView(newData)
+            };
+            window.viewNavigator.replaceView( view );
+        },
+        error: function(){
+            var view = { title: "Error",
+             backLabel: (isTablet() ? "Back" : " "),
+             view: viewAssembler.conectErrorView()
+            };
+            window.viewNavigator.replaceView( view );
+        }
+    });
+
+
+    return false;
+}
+// onError Callback receives a PositionError object//
+function onError(error) {
+    var view = { title: "Error",
+             backLabel: (isTablet() ? "Back" : " "),
+             view: viewAssembler.conectErrorView()
+        };
+        window.viewNavigator.replaceView( view );
+}
+
+function filterMarketsByGeo( latitude, longitude, data ) {
+    var result = {"data":[]};
+    var lat2 = parseFloat(latitude);
+    var lon2 = parseFloat(longitude);
+    var startTime = new Date().getTime();
+    
+    $.each(data.data, function(i,item){
+        
+        console.log(item.mapa);
+        var coordData;
+        var coords = item.mapa.split(',');
+       
+
+        var lat1 = parseFloat(coords[0]);
+        var lon1 = parseFloat(coords[1]);
+        var d = distance( lat1, lon1, lat2, lon2 );
+        result.data.push({nombre: item.nombre, distancia: d});
+        console.log(d);
+    });
+    console.log(result);
+    console.log(new Date().getTime() - startTime );
+    return result;
+    //
+    
+    /* for ( var i =0; i < markets.length; i++ )
+    {
+        var lat1 = parseFloat(markets[i][9]);
+        var lon1 = parseFloat(markets[i][8]);
+        var lat2 = parseFloat(latitude);
+        var lon2 = parseFloat(longitude);
+        //console.log( lat1, lon1, lat2, lon2 );
+       var d = distance( lat1, lon1, lat2, lon2 );
+        if ( d < 100 ){
+            result.push( markets[i] );
+        }
+        
+    }    */
+    //console.log( new Date().getTime() - startTime );
+    
+}
+
+function distance( lat1, lon1, lat2, lon2 ) {
+    var R = 6371; // Radius of the earth in km
+    var dLat = toRad(lat2-lat1);  // Javascript functions in radians
+    var dLon = toRad(lon2-lon1); 
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * 
+            Math.sin(dLon/2) * Math.sin(dLon/2); 
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    var d = R * c; // Distance in km
+    var m = 6 / 1.609344; // Distance in miles
+    return d;
+}
+
+function toRad(degree) 
+{
+    rad = degree* Math.PI/ 180;
+    return rad;
+}
+
 /*
 function setupDefaultView() { 
     
@@ -461,7 +576,7 @@ document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
   document.addEventListener("backbutton", onBackKey, false);
-
+  
 
 }
 
