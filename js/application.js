@@ -30,16 +30,27 @@ function setupDefaultView() {
     $.getScript("data.js", scriptSuccess);
 }
 
-function onRestaurantesViewClick(event) {
+function onRestaurantCategoriesViewClick( event ) {
+    var view = { title: "Categorias",
+             backLabel: (isTablet() ? "Back" : " "),
+             view: viewAssembler.restaurantCategoriesView()
+           };
+    window.viewNavigator.pushView( view );
+    event.stopPropagation();
+    return false;
+}
+
+function onRestaurantListViewClick(event) {
+    console.log(event);
    $.ajax({
-        url: 'http://devel.globalisimo.com/globalisimov3/conex1.php?filtro=100',
+        url: 'http://devel.globalisimo.com/globalisimov3/conex1.php?filtro=100&c='+ event.target.id,
         dataType: 'jsonp',
         jsonp: 'jsoncallback',
         timeout: 5000,
         success: function(data, status){
           var view = { title: "Restaurantes",
              backLabel: (isTablet() ? "Back" : " "),
-             view: viewAssembler.restaurantesView(data)
+             view: viewAssembler.restaurantListView(data)
            };
             window.viewNavigator.pushView( view );
         },
@@ -51,9 +62,34 @@ function onRestaurantesViewClick(event) {
            window.viewNavigator.pushView( view );
         }
     });
-    event.stopPropagation();   
+    event.stopPropagation();
     return false;
- 
+}
+
+function onRestaurantViewClick(event) {
+    console.log(event.target.id);
+   $.ajax({
+        url: 'http://devel.globalisimo.com/globalisimov3/conex1.php?filtro=900&item='+ event.target.id,
+        dataType: 'jsonp',
+        jsonp: 'jsoncallback',
+        timeout: 5000,
+        success: function(data, status){
+          var view = { title: "Restaurantes",
+             backLabel: (isTablet() ? "Back" : " "),
+             view: viewAssembler.restaurantView(data)
+           };
+            window.viewNavigator.pushView( view );
+        },
+        error: function(){
+            var view = { title: "Error",
+             backLabel: (isTablet() ? "Back" : " "),
+             view: viewAssembler.conectErrorView()
+           };
+           window.viewNavigator.pushView( view );
+        }
+    });
+    event.stopPropagation();
+    return false;
 }
 
 function onNextToMeViewClick( event ) {
@@ -63,8 +99,8 @@ function onNextToMeViewClick( event ) {
              view: viewAssembler.loadingView()
             };
             window.viewNavigator.pushView( view );
-    event.stopPropagation();
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    
 }
 
 function onSuccess(position) {
@@ -89,7 +125,8 @@ function onSuccess(position) {
              backLabel: (isTablet() ? "Back" : " "),
              view: viewAssembler.nextToMeView(newData)
             };
-            window.viewNavigator.replaceView( view );
+            window.viewNavigator.replaceView(view);
+            console.log("Hola entro");
         },
         error: function(){
             var view = { title: "Error",
@@ -99,9 +136,8 @@ function onSuccess(position) {
             window.viewNavigator.replaceView( view );
         }
     });
-
-
     return false;
+    event.stopPropagation();   
 }
 // onError Callback receives a PositionError object//
 function onError(error) {
