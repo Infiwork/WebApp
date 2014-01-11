@@ -78,7 +78,7 @@ ViewAssembler.prototype.restaurantListView = function(data) {
 ViewAssembler.prototype.restaurantView = function(data) {
     var template = templates.restaurantViewTemplate ;     
     var el = $( Mustache.to_html(template, data));
-    var map = L.map('map').setView([51.505, -0.09], 13);
+    
    
     return el;
 }
