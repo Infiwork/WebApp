@@ -1,7 +1,11 @@
 /*
 Estilos pricipal de App
 1.-HomeView
-2.-ListView
+2.-RestaurantView
+
+Estilos Globales
+1.-Lista
+
 */
 
 /* 1.- HomeView */
@@ -32,6 +36,24 @@ Estilos pricipal de App
 	margin: 10px auto;
 	text-align: center;
 }
+
+/* 2.- RestaurantView */
+
+#restaurantView p{
+	margin: 0;
+}
+
+#restaurantView span{
+	font-weight: 700;
+}
+
+#restaurantView .col-panel{
+	padding-top: 20px;
+	padding-bottom: 20px;
+	/*border-bottom: 1px solid #333;*/
+}
+
+#map { height: 180px; }
 
 /* 2.- ListView */
 

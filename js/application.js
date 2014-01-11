@@ -69,7 +69,7 @@ function onRestaurantListViewClick(event) {
 function onRestaurantViewClick(event) {
     console.log(event.target.id);
    $.ajax({
-        url: 'http://devel.globalisimo.com/globalisimov3/conex1.php?filtro=900&item='+ event.target.id,
+        url: 'http://devel.globalisimo.com/globalisimov3/conex1.php?filtro=900&tabla=10&item='+ event.target.id,
         dataType: 'jsonp',
         jsonp: 'jsoncallback',
         timeout: 5000,
@@ -139,7 +139,7 @@ function onSuccess(position) {
     return false;
     event.stopPropagation();   
 }
-// onError Callback receives a PositionError object//
+
 function onError(error) {
     var view = { title: "Error",
              backLabel: (isTablet() ? "Back" : " "),
@@ -202,8 +202,7 @@ function distance( lat1, lon1, lat2, lon2 ) {
     return d;
 }
 
-function toRad(degree) 
-{
+function toRad(degree) {
     rad = degree* Math.PI/ 180;
     return rad;
 }

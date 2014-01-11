@@ -1,7 +1,28 @@
 <div id="restaurantView">
     {{#data}}
-    <div class="item-list">
-		<h3>{{nombre}}</h3>
+    <div class="row">
+    	<div class="col-xs-9 col-panel">
+			<h2>{{nombre}}</h2>
+			<p>{{categoria}}</p>
+			<p>{{direccion}}, {{ciudad}}</p>
+    	</div>
+    	<div class="col-xs-3 col-panel">
+
+    	</div>
+    	<div class="col-xs-12 col-panel">
+    		<p><span>Llamar</span> {{telefono}}</p>
+    	</div>
+    	<div class="col-xs-12 col-panel">
+   			<p><span>Horario</span> Lunes a Viernes {{lunes-viernes}}</p>
+    	</div>
+    	<div class="col-xs-12 col-panel">
+    		<span>Servicios</span>
+
+    	</div>
+    	<div class="col-xs-12">
+			<div id="map" style="width: 600px; height: 400px"></div>
+    	</div>
+    	
     </div>
     {{/data}}
 </div>
