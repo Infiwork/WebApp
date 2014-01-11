@@ -1,13 +1,13 @@
 
 var templates = {
     homeViewTemplate:"views/homeViewTemplate.html",
-    restaurantesViewTemplate:"views/restaurantesViewTemplate.html",
-    conectErrorViewTemplate:"views/conectErrorViewTemplate.html",
-    conectErrorViewTemplate:"views/conectErrorViewTemplate.html",
+    restaurantCategoriesViewTemplate:"views/restaurantCategoriesViewTemplate.html",
+    restaurantListViewTemplate:"views/restaurantListViewTemplate.html",
+    restaurantViewTemplate:"views/restaurantViewTemplate.html",
     nextToMeViewTemplate:"views/nextToMeViewTemplate.html",
+    conectErrorViewTemplate:"views/conectErrorViewTemplate.html",
     loadingViewTemplate:"views/loadingViewTemplate.html",
-    /*defaultViewTemplate:"views/defaultViewTemplate.html",
-    searchResultsViewTemplate:"views/searchResultsViewTemplate.html",
+    /*searchResultsViewTemplate:"views/searchResultsViewTemplate.html",
     searchViewTemplate:"views/searchViewTemplate.html",*/
     loaded: 0,
     requested: 0
@@ -24,11 +24,9 @@ function loadTemplates(callback) {
              var _key = key.toString();
              if ( _key != "loaded" && _key != "requested" ){
                  templates.requested ++;
-                 
                  var templateLoaded = function( template ){
                     onTemplateLoaded( template, _key );
                  }
-                 
                  $.get( templates[ _key ], templateLoaded, "html" );
              }
          })();
@@ -36,8 +34,6 @@ function loadTemplates(callback) {
 }
 
 function onTemplateLoaded(template, key) {
-    
-    //alert( key + ": " + template);
     templates[ key ] = template;
     templates.loaded ++;
     
@@ -61,25 +57,39 @@ function ViewAssembler() {
 
 ViewAssembler.prototype.homeView = function() {
     var el = $( templates.homeViewTemplate );
-    el.find("#restaurantes").on( this.CLICK_EVENT, onRestaurantesViewClick );
+    el.find("#restaurantes").on( this.CLICK_EVENT, onRestaurantCategoriesViewClick );
     el.find("#cerca-de-mi").on( this.CLICK_EVENT, onNextToMeViewClick );
     return el;
 }
 
-ViewAssembler.prototype.restaurantesView = function(data) {
-    var template = templates.restaurantesViewTemplate ;     
-    var el = $( Mustache.to_html(template, data));
+ViewAssembler.prototype.restaurantCategoriesView = function() {
+    var el = $(templates.restaurantCategoriesViewTemplate );
+    el.find(".item-list").on( this.CLICK_EVENT, onRestaurantListViewClick );
     return el;
 }
 
-ViewAssembler.prototype.conectErrorView = function() {
-    var el = $( templates.conectErrorViewTemplate );
+ViewAssembler.prototype.restaurantListView = function(data) {
+    var template = templates.restaurantListViewTemplate ;     
+    var el = $( Mustache.to_html(template, data));
+    el.find(".item-list").on( this.CLICK_EVENT, onRestaurantViewClick );
+    return el;
+}
+
+ViewAssembler.prototype.restaurantView = function(data) {
+    var template = templates.restaurantViewTemplate ;     
+    var el = $( Mustache.to_html(template, data));
     return el;
 }
 
 ViewAssembler.prototype.nextToMeView = function(data) {
     var template = templates.nextToMeViewTemplate;
     var el = $( Mustache.to_html(template, data));
+    console.log("ho");
+    return el;
+}
+
+ViewAssembler.prototype.conectErrorView = function() {
+    var el = $( templates.conectErrorViewTemplate );
     return el;
 }
 
