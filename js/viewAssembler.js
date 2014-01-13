@@ -86,7 +86,6 @@ ViewAssembler.prototype.restaurantView = function(data) {
 ViewAssembler.prototype.nextToMeView = function(data) {
     var template = templates.nextToMeViewTemplate;
     var el = $( Mustache.to_html(template, data));
-    console.log("ho");
     return el;
 }
 

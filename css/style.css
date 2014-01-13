@@ -38,6 +38,10 @@ Estilos Globales
 }
 
 /* 2.- RestaurantView */
+#restaurantView h2{
+	margin: 0px;
+	line-height: 1em; 
+}
 
 #restaurantView p{
 	margin: 0;
@@ -48,9 +52,19 @@ Estilos Globales
 }
 
 #restaurantView .col-panel{
-	padding-top: 20px;
-	padding-bottom: 20px;
-	/*border-bottom: 1px solid #333;*/
+	background-color: #fff;
+	border-bottom: 1px solid #aaa;
+	padding: 15px 30px;
+}
+.image-principal{
+	height: 150px;
+}
+
+.image-principal div{
+	height: 200px;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
 #map { height: 180px; }

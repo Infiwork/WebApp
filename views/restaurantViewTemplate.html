@@ -1,14 +1,22 @@
 <div id="restaurantView">
     {{#data}}
     <div class="row">
-    	<div class="col-xs-9 col-panel">
-			<h2>{{nombre}}</h2>
-			<p>{{categoria}}</p>
-			<p>{{direccion}}, {{ciudad}}</p>
-    	</div>
-    	<div class="col-xs-3 col-panel">
+        <div class="col-xs-12 image-principal" >
+            <div style="background-image:url('img/hamburguesa.jpg')"></div>
+        </div>
+        <div class="col-xs-12 col-panel">
+            <div class="row">
+                <div class="col-xs-9 ">
+                    <h2>{{nombre}}</h2>
+                    <p>{{categoria}}</p>
+                    <p>{{direccion}}, {{ciudad}}</p>
+                </div>
+                <div class="col-xs-3">
 
-    	</div>
+                </div>
+            </div>
+        </div>
+    	
     	<div class="col-xs-12 col-panel">
     		<p><span>Llamar</span> {{telefono}}</p>
     	</div>
@@ -17,10 +25,10 @@
     	</div>
     	<div class="col-xs-12 col-panel">
     		<span>Servicios</span>
-
+            <div class="col-panel">hola</div>
     	</div>
     	<div class="col-xs-12">
-			<div id="map" style="width: 600px; height: 400px"></div>
+		
     	</div>
     	
     </div>
