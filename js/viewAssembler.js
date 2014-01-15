@@ -5,6 +5,7 @@ var templates = {
     restaurantListViewTemplate:"views/restaurantListViewTemplate.html",
     restaurantViewTemplate:"views/restaurantViewTemplate.html",
     nextToMeViewTemplate:"views/nextToMeViewTemplate.html",
+    filtersSearchViewTemplate:"views/filtersSearchViewTemplate.html",
     conectErrorViewTemplate:"views/conectErrorViewTemplate.html",
     loadingViewTemplate:"views/loadingViewTemplate.html",
     /*searchResultsViewTemplate:"views/searchResultsViewTemplate.html",
@@ -65,6 +66,7 @@ ViewAssembler.prototype.homeView = function() {
 ViewAssembler.prototype.restaurantCategoriesView = function() {
     var el = $(templates.restaurantCategoriesViewTemplate );
     el.find(".item-list").on( this.CLICK_EVENT, onRestaurantListViewClick );
+    el.find(".item-filter").on( this.CLICK_EVENT, onFiltersSearchViewClick );
     return el;
 }
 
@@ -78,8 +80,12 @@ ViewAssembler.prototype.restaurantListView = function(data) {
 ViewAssembler.prototype.restaurantView = function(data) {
     var template = templates.restaurantViewTemplate ;     
     var el = $( Mustache.to_html(template, data));
-    
-   
+    return el;
+}
+
+ViewAssembler.prototype.filtersSearchView = function() {
+    var el = $( templates.filtersSearchViewTemplate );
+    el.find(".button").on( this.CLICK_EVENT, onFilterPriceClick );
     return el;
 }
 

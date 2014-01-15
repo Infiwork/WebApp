@@ -141,8 +141,6 @@ body {
 .viewNavigator_contentHolder {
     color:#444;
     background:#999;
-    border-left:1px solid #999;
-    border-right:1px solid #999;
 }
 
 .viewNavigator_contentHolder > div:first-child {

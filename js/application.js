@@ -40,10 +40,28 @@ function onRestaurantCategoriesViewClick( event ) {
     return false;
 }
 
+function onFiltersSearchViewClick( event ) {
+    var view = { title: "Filtros",
+             backLabel: (isTablet() ? "Back" : " "),
+             view: viewAssembler.filtersSearchView()
+           };
+    window.viewNavigator.pushView( view );
+    event.stopPropagation();
+    return false;
+}
+
+function onFilterPriceClick(event){
+  console.log(event.target.dataset.price);
+}
+
+
 function onRestaurantListViewClick(event) {
-    console.log(event);
+  var cat = event.target.id;
+  if(!cat.length) 
+    cat = event.target.parentElement.id;
+    //console.log(event.target.parentElement.id);
    $.ajax({
-        url: 'http://devel.globalisimo.com/globalisimov3/conex1.php?filtro=100&c='+ event.target.id,
+        url: 'http://devel.globalisimo.com/globalisimov3/conex1.php?filtro=100&c='+cat,
         dataType: 'jsonp',
         jsonp: 'jsoncallback',
         timeout: 5000,
@@ -67,9 +85,12 @@ function onRestaurantListViewClick(event) {
 }
 
 function onRestaurantViewClick(event) {
-    console.log(event.target.id);
+  var item= event.target.id;
+  if(!item.length){
+    item = event.target.parentElement.id;
+  }
    $.ajax({
-        url: 'http://devel.globalisimo.com/globalisimov3/conex1.php?filtro=900&tabla=10&item='+ event.target.id,
+        url: 'http://devel.globalisimo.com/globalisimov3/conex1.php?filtro=900&tabla=10&item='+item,
         dataType: 'jsonp',
         jsonp: 'jsoncallback',
         timeout: 5000,
