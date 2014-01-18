@@ -12,13 +12,20 @@
                     <p>{{direccion}}, {{ciudad}}</p>
                 </div>
                 <div class="col-xs-3">
-
                 </div>
             </div>
         </div>
-    	
-    	<div class="col-xs-12 col-panel">
-    		<p><span>Llamar</span> {{telefono}}</p>
+    	<div class="col-xs-12">
+            <div id="map-wrap" data-coords="{{mapa}}">
+                <div id="map-image" style="width:100%;height:100%">
+                
+            </div>
+            <span>¿Cómo llegar?</span>
+            </div>
+            
+        </div>
+    	<div id="panel-call" class="col-xs-12 col-panel" data-phone="{{telefono}}">
+    		<span>Llamar</span> {{telefono}}
     	</div>
     	<div class="col-xs-12 col-panel">
    			<p><span>Horario</span> Lunes a Viernes {{lunes-viernes}}</p>

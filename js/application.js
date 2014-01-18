@@ -16,7 +16,6 @@ $(document).ready( function(){
 } );
 
 function setupDefaultView() { 
-    
     var bodyView = viewAssembler.homeView(); 
     //Setup the home view
     var homeView = { title: "<img src='img/logo_glob.png'>", 
@@ -37,7 +36,6 @@ function onRestaurantCategoriesViewClick( event ) {
            };
     window.viewNavigator.pushView( view );
     event.stopPropagation();
-    return false;
 }
 
 function onFiltersSearchViewClick( event ) {
@@ -52,14 +50,16 @@ function onFiltersSearchViewClick( event ) {
 
 function onFilterPriceClick(event){
   console.log(event.target.dataset.price);
+  $(".button").toggleClass("active");
 }
 
 
 function onRestaurantListViewClick(event) {
+  loadingView();
+console.log("enter");
   var cat = event.target.id;
   if(!cat.length) 
     cat = event.target.parentElement.id;
-    //console.log(event.target.parentElement.id);
    $.ajax({
         url: 'http://devel.globalisimo.com/globalisimov3/conex1.php?filtro=100&c='+cat,
         dataType: 'jsonp',
@@ -70,14 +70,14 @@ function onRestaurantListViewClick(event) {
              backLabel: (isTablet() ? "Back" : " "),
              view: viewAssembler.restaurantListView(data)
            };
-            window.viewNavigator.pushView( view );
+            window.viewNavigator.replaceView( view );
         },
         error: function(){
             var view = { title: "Error",
              backLabel: (isTablet() ? "Back" : " "),
              view: viewAssembler.conectErrorView()
            };
-           window.viewNavigator.pushView( view );
+           window.viewNavigator.replaceView( view );
         }
     });
     event.stopPropagation();
@@ -99,7 +99,11 @@ function onRestaurantViewClick(event) {
              backLabel: (isTablet() ? "Back" : " "),
              view: viewAssembler.restaurantView(data)
            };
-            window.viewNavigator.pushView( view );
+          window.viewNavigator.pushView( view );
+          $.each(data.data, function(i,item){
+            addMapImage(item.mapa,1);
+          });
+          
         },
         error: function(){
             var view = { title: "Error",
@@ -114,14 +118,90 @@ function onRestaurantViewClick(event) {
 }
 
 function onNextToMeViewClick( event ) {
-    
     var view = { title: "Cargando...",
              backLabel: (isTablet() ? "Back" : " "),
              view: viewAssembler.loadingView()
             };
             window.viewNavigator.pushView( view );
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+        navigator.geolocation.getCurrentPosition(onSuccess, onError);
+        event.stopPropagation();
     
+}
+
+function onImagePrincipal(){
+  $(".image-principal").toggleClass("see-more");
+}
+
+function onPanelCall(event){
+  console.log(event);
+   var item = event.target.dataset.phone;
+    if(item==null)
+    item = event.target.parentNode.dataset.phone;
+    
+    var msg = Ext.Msg.confirm('Alerta','Desea marcar a este numero telefonico?',
+    function(r){
+      if (r == 'yes'){
+        if (Ext.is.Android){
+          document.location.href = 'tel:+'+item;
+    } else { // we assume the device is running iOS
+        window.plugins.phoneDialer.dial(item);
+    }
+      }   
+  });
+    msg.doComponentLayout();
+}
+
+function onImageMapClick(event){
+  var coords = (event.delegateTarget.dataset.coords);
+  if(coords.length==0|| coords==''){
+    confirm("Lo sentimos, no hay ubicación disonible");
+    return false;
+  }
+  else{
+  var view = { title: "Ubicación",
+             backLabel: (isTablet() ? "Back" : " "),
+             view: viewAssembler.mapView()
+            };
+  window.viewNavigator.pushView( view );
+  addMapImage(coords,2);
+  
+  event.stopPropagation();
+  }
+  
+  return false;
+
+}
+
+function addMapImage(coords,type){
+  var point = coords.split(',');
+ 
+  if(type==1) 
+  var map = L.map('map-image',{
+    zoomControl:false,
+    dragging:false,
+    touchZoom:false,
+    doubleClickZoom:false
+  }).setView([point[0],point[1]], 15);
+
+  else
+    var map = L.map('map').setView([point[0],point[1]], 15);
+  
+  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy;Globalisimo.com'
+  }).addTo(map);
+
+
+  L.marker([point[0],point[1]]).addTo(map)
+    return false;
+}
+
+function loadingView(){
+var view = { title: "Cargando...",
+             backLabel: (isTablet() ? "Back" : " "),
+             view: viewAssembler.loadingView()
+            };
+            window.viewNavigator.pushView( view );
+          event.stopPropagation();
 }
 
 function onSuccess(position) {
@@ -147,7 +227,6 @@ function onSuccess(position) {
              view: viewAssembler.nextToMeView(newData)
             };
             window.viewNavigator.replaceView(view);
-            console.log("Hola entro");
         },
         error: function(){
             var view = { title: "Error",
@@ -181,7 +260,6 @@ function filterMarketsByGeo( latitude, longitude, data ) {
         var coordData;
         var coords = item.mapa.split(',');
        
-
         var lat1 = parseFloat(coords[0]);
         var lon1 = parseFloat(coords[1]);
         var d = distance( lat1, lon1, lat2, lon2 );
@@ -190,24 +268,7 @@ function filterMarketsByGeo( latitude, longitude, data ) {
     });
     console.log(result);
     console.log(new Date().getTime() - startTime );
-    return result;
-    //
-    
-    /* for ( var i =0; i < markets.length; i++ )
-    {
-        var lat1 = parseFloat(markets[i][9]);
-        var lon1 = parseFloat(markets[i][8]);
-        var lat2 = parseFloat(latitude);
-        var lon2 = parseFloat(longitude);
-        //console.log( lat1, lon1, lat2, lon2 );
-       var d = distance( lat1, lon1, lat2, lon2 );
-        if ( d < 100 ){
-            result.push( markets[i] );
-        }
-        
-    }    */
-    //console.log( new Date().getTime() - startTime );
-    
+    return result;    
 }
 
 function distance( lat1, lon1, lat2, lon2 ) {

@@ -8,6 +8,7 @@ var templates = {
     filtersSearchViewTemplate:"views/filtersSearchViewTemplate.html",
     conectErrorViewTemplate:"views/conectErrorViewTemplate.html",
     loadingViewTemplate:"views/loadingViewTemplate.html",
+    mapViewTemplate:"views/mapViewTemplate.html",
     /*searchResultsViewTemplate:"views/searchResultsViewTemplate.html",
     searchViewTemplate:"views/searchViewTemplate.html",*/
     loaded: 0,
@@ -65,7 +66,7 @@ ViewAssembler.prototype.homeView = function() {
 
 ViewAssembler.prototype.restaurantCategoriesView = function() {
     var el = $(templates.restaurantCategoriesViewTemplate );
-    el.find(".item-list").on( this.CLICK_EVENT, onRestaurantListViewClick );
+    el.find(".item-categories").on( this.CLICK_EVENT, onRestaurantListViewClick );
     el.find(".item-filter").on( this.CLICK_EVENT, onFiltersSearchViewClick );
     return el;
 }
@@ -80,6 +81,9 @@ ViewAssembler.prototype.restaurantListView = function(data) {
 ViewAssembler.prototype.restaurantView = function(data) {
     var template = templates.restaurantViewTemplate ;     
     var el = $( Mustache.to_html(template, data));
+    el.find("#map-wrap").on( this.CLICK_EVENT, onImageMapClick );
+    el.find(".image-principal").on( this.CLICK_EVENT, onImagePrincipal );
+    el.find("#panel-call").on( this.CLICK_EVENT, onPanelCall );
     return el;
 }
 
@@ -92,6 +96,11 @@ ViewAssembler.prototype.filtersSearchView = function() {
 ViewAssembler.prototype.nextToMeView = function(data) {
     var template = templates.nextToMeViewTemplate;
     var el = $( Mustache.to_html(template, data));
+    return el;
+}
+
+ViewAssembler.prototype.mapView = function() {
+    var el = $( templates.mapViewTemplate );
     return el;
 }
 

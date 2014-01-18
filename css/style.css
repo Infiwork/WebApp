@@ -62,7 +62,12 @@ Estilos Globales
 }
 
 .image-principal{
-	height: 150px;
+	height: 120px;
+	transition:all .5s linear;
+}
+
+.see-more{
+	height: 200px;
 }
 
 .image-principal div{
@@ -72,7 +77,27 @@ Estilos Globales
 	background-repeat: no-repeat;
 }
 
-#map { height: 180px; }
+#map-wrap{
+	height:100px;
+	width:100%;
+}
+
+#map-wrap span{
+	position: absolute;
+	top:30px;
+	left: 30px;
+	font-weight: 700;
+
+}
+
+#map-image{
+	top:0px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    position:absolute;
+}
+
 
 /* 1.- ListView */
 .item-filter{
@@ -81,33 +106,39 @@ Estilos Globales
 	height: 40px;
 }
 
+.item-categories{
+	border-bottom: 1px #BBB solid;
+	height: 50px;
+}
+
+.item-categories img{
+	float: left;
+	height: 40px;
+	margin-top: 5px;
+}
+
+.item-categories span{
+	float: left;
+	font-size: 25px;
+	margin: 8px 0px 0px 30px;
+}
+
 .item-list{
 	border-bottom: 1px #BBB solid;
 	height: 80px;
 }
 
-.item-list img{
-	float: left;
-	height: 60px;
-	margin-top: 10px;
-}
-
-.item-list span{
-	float: left;
-	font-size: 30px;
-	margin: 20px 0px 0px 30px;
-}
-
 .item-list h3{
 	float: left;
+	font-size: 15px;
 	margin-top: 10px;
 }
 
 .item-list .thumb-list{
 	float: left;
 	height: 60px;
-	width: 100px;
-	margin: 10px 20px;
+	width: 70px;
+	margin: 10px 10px;
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
