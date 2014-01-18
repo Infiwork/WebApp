@@ -55,7 +55,6 @@ function onFilterPriceClick(event){
 
 
 function onRestaurantListViewClick(event) {
-  loadingView();
 console.log("enter");
   var cat = event.target.id;
   if(!cat.length) 
@@ -70,14 +69,14 @@ console.log("enter");
              backLabel: (isTablet() ? "Back" : " "),
              view: viewAssembler.restaurantListView(data)
            };
-            window.viewNavigator.replaceView( view );
+            window.viewNavigator.pushView( view );
         },
         error: function(){
             var view = { title: "Error",
              backLabel: (isTablet() ? "Back" : " "),
              view: viewAssembler.conectErrorView()
            };
-           window.viewNavigator.replaceView( view );
+           window.viewNavigator.pushView( view );
         }
     });
     event.stopPropagation();
