@@ -136,20 +136,18 @@ function onPanelCall(event){
     if(item==null)
     item = event.target.parentNode.dataset.phone;
     
-    var r =confirm('Desea marcar a este numero telefonico?');
     
-    if (r == true){
       if (Ext.is.Android){
           document.location.href = 'tel:+'+item;
       } 
       else { // we assume the device is running iOS
         window.plugins.phoneDialer.dial(item);
-      }
-    }   
+      }   
   
 }
 
 function onImageMapClick(event){
+  confirm("Lo sentimos, no hay ubicación disonible");
   var coords = (event.delegateTarget.dataset.coords);
   if(coords.length==0|| coords==''){
     confirm("Lo sentimos, no hay ubicación disonible");
@@ -172,7 +170,9 @@ function onImageMapClick(event){
 
 function addMapImage(coords,type){
   var point = coords.split(',');
- 
+  
+
+
   if(type==1) 
   var map = L.map('map-image',{
     zoomControl:false,
