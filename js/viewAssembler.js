@@ -84,27 +84,25 @@ ViewAssembler.prototype.restaurantView = function(data) {
     var el = $( Mustache.to_html(template, data));
     el.find(".image-principal").on( this.CLICK_EVENT, onImagePrincipal );
     el.find("#panel-call").on( this.CLICK_EVENT, onPanelCall );
-    
+    el.find("#map-caption span").on( this.CLICK_EVENT, onImageMapClick );
+
    var point;
     
     setTimeout( function(){
     $.each(data.data, function(i,item){
-           // addMapImage(item.mapa);
             point = (item.mapa).split(',');
-            
     });
 
-    console.log(point[1]);    
-    var map = L.map('map-image').setView([point[0],point[1]], 15);
+    var map = L.map('map-image', {
+    zoomControl:false,
+    dragging:false
+    }).setView([point[0],point[1]], 16);
   
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy;Globalisimo.com'
     }).addTo(map);
-    console.log('entra y entra');
+    L.marker([point[0],point[1]]).addTo(map);
 
-    map.on('mousedown', function(e) {
-        confirm("holaaa Gracias a Dios");
-    });
     }, 120 );
     
     return el;
@@ -112,7 +110,6 @@ ViewAssembler.prototype.restaurantView = function(data) {
 
 ViewAssembler.prototype.filtersSearchView = function() {
     var el = $( templates.filtersSearchViewTemplate );
-    //el.find(".button").on( this.CLICK_EVENT, onFilterPriceClick );
     return el;
 }
 

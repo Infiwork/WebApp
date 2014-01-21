@@ -132,6 +132,7 @@ function onPanelCall(event){
     if(item==null)
     item = event.target.parentNode.dataset.phone;
     
+    confirm(item);
           document.location.href = 'tel:+'+item;
        
   

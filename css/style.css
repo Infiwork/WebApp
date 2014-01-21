@@ -99,7 +99,7 @@ Estilos Globales
     z-index: 1;
 }
 
-#prueba{
+#map-caption{
 	top:0px;
     bottom:0px;
     left:0px;
@@ -108,7 +108,13 @@ Estilos Globales
     z-index: 2;
     background-color: #fff;
 }
-
+#map-caption span{
+	float: right;
+	height: 100px;
+	width: 200px;
+	background-color: red;
+	cursor: default;
+}
 
 /* 1.- ListView */
 .item-filter{
