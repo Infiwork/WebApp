@@ -132,22 +132,21 @@ function onImagePrincipal(){
 }
 
 function onPanelCall(event){
-  console.log(event);
    var item = event.target.dataset.phone;
     if(item==null)
     item = event.target.parentNode.dataset.phone;
     
-    var msg = Ext.Msg.confirm('Alerta','Desea marcar a este numero telefonico?',
-    function(r){
-      if (r == 'yes'){
-        if (Ext.is.Android){
+    var r =confirm('Desea marcar a este numero telefonico?');
+    
+    if (r == true){
+      if (Ext.is.Android){
           document.location.href = 'tel:+'+item;
-    } else { // we assume the device is running iOS
+      } 
+      else { // we assume the device is running iOS
         window.plugins.phoneDialer.dial(item);
-    }
-      }   
-  });
-    msg.doComponentLayout();
+      }
+    }   
+  
 }
 
 function onImageMapClick(event){
@@ -185,12 +184,23 @@ function addMapImage(coords,type){
   else
     var map = L.map('map').setView([point[0],point[1]], 15);
   
+  
+
   L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy;Globalisimo.com'
   }).addTo(map);
+  
+  var blueMarkerIcon = L.Icon({
+        iconUrl: 'assets/map/marker-lightblue.png',
+        shadowUrl: 'assets/map/shadow.png',
 
+        iconSize: [26, 40],
+        shadowSize: [32, 39],
+        iconAnchor: [14, 39],
+        popupAnchor: [0, -35]
+    });
 
-  L.marker([point[0],point[1]]).addTo(map)
+  L.marker([point[0],point[1]]).addTo(map);
     return false;
 }
 

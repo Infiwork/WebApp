@@ -60,6 +60,7 @@ function ViewAssembler() {
 ViewAssembler.prototype.homeView = function() {
     var el = $( templates.homeViewTemplate );
     el.find("#restaurantes").on( this.CLICK_EVENT, onRestaurantCategoriesViewClick );
+    //el.find("#eventos").on( this.CLICK_EVENT, onEventsListViewClick );
     el.find("#cerca-de-mi").on( this.CLICK_EVENT, onNextToMeViewClick );
     return el;
 }
