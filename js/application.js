@@ -136,18 +136,13 @@ function onPanelCall(event){
     if(item==null)
     item = event.target.parentNode.dataset.phone;
     
-    
-      if (Ext.is.Android){
           document.location.href = 'tel:+'+item;
-      } 
-      else { // we assume the device is running iOS
-        window.plugins.phoneDialer.dial(item);
-      }   
+       
   
 }
 
 function onImageMapClick(event){
-  confirm("Lo sentimos, no hay ubicación disonible");
+  confirm("flaf 1");
   var coords = (event.delegateTarget.dataset.coords);
   if(coords.length==0|| coords==''){
     confirm("Lo sentimos, no hay ubicación disonible");
@@ -159,8 +154,9 @@ function onImageMapClick(event){
              view: viewAssembler.mapView()
             };
   window.viewNavigator.pushView( view );
+  confirm("flaf 2");
   addMapImage(coords,2);
-  
+  confirm("flaf 3");
   event.stopPropagation();
   }
   
@@ -171,7 +167,7 @@ function onImageMapClick(event){
 function addMapImage(coords,type){
   var point = coords.split(',');
   
-
+confirm("flag 1");
 
   if(type==1) 
   var map = L.map('map-image',{
@@ -184,12 +180,12 @@ function addMapImage(coords,type){
   else
     var map = L.map('map').setView([point[0],point[1]], 15);
   
-  
+  confirm("flag 2");
 
   L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy;Globalisimo.com'
   }).addTo(map);
-  
+  confirm("flag 3");
     return false;
 }
 
