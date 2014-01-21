@@ -99,10 +99,6 @@ function onRestaurantViewClick(event) {
              view: viewAssembler.restaurantView(data)
            };
           window.viewNavigator.pushView( view );
-          $.each(data.data, function(i,item){
-            addMapImage(item.mapa,1);
-          });
-          
         },
         error: function(){
             var view = { title: "Error",
@@ -142,8 +138,8 @@ function onPanelCall(event){
 }
 
 function onImageMapClick(event){
-  confirm("flaf 1");
-  var coords = (event.delegateTarget.dataset.coords);
+  console.log("hola");
+  /*var coords = (event.delegateTarget.dataset.coords);
   if(coords.length==0|| coords==''){
     confirm("Lo sentimos, no hay ubicación disonible");
     return false;
@@ -154,39 +150,40 @@ function onImageMapClick(event){
              view: viewAssembler.mapView()
             };
   window.viewNavigator.pushView( view );
-  confirm("flaf 2");
-  addMapImage(coords,2);
-  confirm("flaf 3");
   event.stopPropagation();
+  addMapComplete(coords);
   }
   
   return false;
-
+*/
 }
 
-function addMapImage(coords,type){
+function addMapImage(coords){
   var point = coords.split(',');
   
-confirm("flag 1");
-
-  if(type==1) 
-  var map = L.map('map-image',{
-    zoomControl:false,
-    dragging:false,
-    touchZoom:false,
-    doubleClickZoom:false
-  }).setView([point[0],point[1]], 15);
-
-  else
-    var map = L.map('map').setView([point[0],point[1]], 15);
+  var map = L.map('map-image').setView([point[0],point[1]], 15);
   
-  confirm("flag 2");
-
   L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy;Globalisimo.com'
   }).addTo(map);
-  confirm("flag 3");
-    return false;
+  console.log('entra y entra');
+
+  map.on('click', function(e) {
+    console.log(e.latlng);
+  });
+
+  return false;
+}
+
+function addMapComplete(coords){
+  
+  var point = coords.split(',');
+  confirm(coords);
+  var map = L.map('map-complete').setView([point[0],point[1]], 15);
+  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy;Globalisimo.com'
+  }).addTo(map);
+  return false;
 }
 
 function loadingView(){
