@@ -90,7 +90,7 @@ ViewAssembler.prototype.restaurantView = function(data) {
 
 ViewAssembler.prototype.filtersSearchView = function() {
     var el = $( templates.filtersSearchViewTemplate );
-    el.find(".button").on( this.CLICK_EVENT, onFilterPriceClick );
+    //el.find(".button").on( this.CLICK_EVENT, onFilterPriceClick );
     return el;
 }
 

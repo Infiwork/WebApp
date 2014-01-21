@@ -190,17 +190,6 @@ function addMapImage(coords,type){
     attribution: '&copy;Globalisimo.com'
   }).addTo(map);
   
-  var blueMarkerIcon = L.Icon({
-        iconUrl: 'assets/map/marker-lightblue.png',
-        shadowUrl: 'assets/map/shadow.png',
-
-        iconSize: [26, 40],
-        shadowSize: [32, 39],
-        iconAnchor: [14, 39],
-        popupAnchor: [0, -35]
-    });
-
-  L.marker([point[0],point[1]]).addTo(map);
     return false;
 }
 
