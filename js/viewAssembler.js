@@ -84,7 +84,7 @@ ViewAssembler.prototype.restaurantView = function(data) {
     var el = $( Mustache.to_html(template, data));
     el.find(".image-principal").on( this.CLICK_EVENT, onImagePrincipal );
     el.find("#panel-call").on( this.CLICK_EVENT, onPanelCall );
-    el.find("#map-caption span").on( this.CLICK_EVENT, onImageMapClick );
+    el.find("#see-map").on( this.CLICK_EVENT, onImageMapClick );
 
    var point;
     
@@ -119,7 +119,8 @@ ViewAssembler.prototype.nextToMeView = function(data) {
     return el;
 }
 
-ViewAssembler.prototype.mapView = function(data) {
+ViewAssembler.prototype.mapView = function() {
+    var el = $( templates.mapViewTemplate );
     return el;
 }
 

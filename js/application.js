@@ -139,13 +139,14 @@ function onPanelCall(event){
 }
 
 function onImageMapClick(event){
-  console.log("hola");
+  console.log(event);
   /*var coords = (event.delegateTarget.dataset.coords);
   if(coords.length==0|| coords==''){
     confirm("Lo sentimos, no hay ubicación disonible");
     return false;
   }
-  else{
+  else{*/
+  var coords = event.target.dataset.coords;
   var view = { title: "Ubicación",
              backLabel: (isTablet() ? "Back" : " "),
              view: viewAssembler.mapView()
@@ -153,10 +154,9 @@ function onImageMapClick(event){
   window.viewNavigator.pushView( view );
   event.stopPropagation();
   addMapComplete(coords);
-  }
+  
   
   return false;
-*/
 }
 
 function addMapImage(coords){
@@ -179,11 +179,11 @@ function addMapImage(coords){
 function addMapComplete(coords){
   
   var point = coords.split(',');
-  confirm(coords);
-  var map = L.map('map-complete').setView([point[0],point[1]], 15);
+  var map = L.map('map-complete').setView([point[0],point[1]], 16);
   L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy;Globalisimo.com'
   }).addTo(map);
+  L.marker([point[0],point[1]]).addTo(map);
   return false;
 }
 

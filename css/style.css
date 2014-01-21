@@ -106,7 +106,7 @@ Estilos Globales
     right:0px;
     position:absolute;
     z-index: 2;
-    background-color: #fff;
+    background-color: rgba(0,0,0,.5);
 }
 #map-caption span{
 	float: right;
