@@ -28,7 +28,7 @@ $end_list = (($lista+1)*15)+1;
 switch ($from_filtro) {
 	case 100:
 		$categoria= $_GET["c"]; //Var Categoria
-		$sql = "SELECT id, nombre, descripcion,calificacion,logo 
+		$sql = "SELECT id, nombre, descripcion,calificacion,logo,mapa
 				FROM restaurantes WHERE tipo_comida = $categoria
 				ORDER BY id LIMIT $star_list,$end_list";
 		break;
@@ -41,8 +41,22 @@ switch ($from_filtro) {
 	case 400:
 		$sql = "SELECT id, titulo, descripcion FROM noticias ORDER BY id DESC LIMIT 0,15";
 		break;
-	case 500: //Filtro para el scroll de eventos
-		$sql = "SELECT id, nombre, mapa FROM restaurantes ORDER BY id DESC LIMIT 5,10";
+	case 600: //Filtro para el scroll de eventos
+		$calificacion = $_GET["cl"];
+		$_ciudad = $_GET["cd"];
+		$precio = $_GET["pr"];
+		switch ($_ciudad) {
+			case 1:$ciudad = "Tijuana";break;
+			case 2:$ciudad = "San Diego";break;
+			case 3:$ciudad = "Rosarito";break;
+			case 4:$ciudad = "Ensenada";break;
+			case 5:$ciudad = "San Francisco";break;
+			default:$ciudad = "Tijuana";break;
+		}
+		$sql = "SELECT id, nombre, descripcion,calificacion,logo, rango_precio, ciudad,mapa
+				FROM restaurantes WHERE rango_precio = $precio 
+				AND calificacion = $calificacion AND MATCH(ciudad) AGAINST ('$ciudad')
+				ORDER BY id LIMIT $star_list,$end_list";
 		break;
 	case 900:
 		$from_tabla = $_GET["tabla"];

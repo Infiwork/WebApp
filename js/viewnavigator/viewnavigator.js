@@ -11,7 +11,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 
-var ViewNavigator = function( target, backLinkCSS, bindToWindow ) {
+var ViewNavigator = function( target, backLinkCSS, mapLinkCSS, bindToWindow ) {
 
 	this.supportsBackKey = true; //phonegap on android only
 	this.animating = false;
@@ -35,6 +35,7 @@ var ViewNavigator = function( target, backLinkCSS, bindToWindow ) {
 	this.parent = $( target );
 	
 	this.backLinkCSS = backLinkCSS ? backLinkCSS : "viewNavigator_backButton";
+	this.mapLinkCSS = mapLinkCSS ? mapLinkCSS : "viewNavigator_mapButton";
 	
 	var self = this;
 	//$(window).resize( function(event){ self.resizeContent() } );
@@ -105,9 +106,6 @@ ViewNavigator.prototype.updateView = function( viewDescriptor ) {
 	
 	this.animating = true;
 	
-    
-	
-	
 	this.contentPendingRemove = this.contentViewHolder;
 	this.headerContentPendingRemove = this.headerContent;
 	
@@ -125,6 +123,11 @@ ViewNavigator.prototype.updateView = function( viewDescriptor ) {
 		this.setHeaderPadding( this.headerPadding );
 	}
 	
+	if(viewDescriptor.mapLabel ){
+		this.headerMaplink = $('<li class="viewNavigator_header_maplink viewNavigator_mapButtonPosition ' + this.mapLinkCSS +'"  onclick="onMapList();" </li>');		
+		this.headerContent.append( this.headerMaplink );
+	}
+
 	var id = this.guid();
 	this.contentViewHolder = $('<div class="viewNavigator_contentHolder" id="' + id + '"></div>');
 	this.contentViewHolder.append( viewDescriptor.view );

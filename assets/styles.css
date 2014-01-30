@@ -117,8 +117,35 @@ body {
     background-repeat:no-repeat;
 }
 
+.viewNavigator_mapButton {
+    position:absolute;
+    top:5px;
+    right:5px;
+    width:40px;
+    color: rgba(0,0,0,0);
+    height:35px;
+    box-shadow: 0 0 0 0;
+    background: #DEDEDE;
+    border:1px solid #999;
+    padding:0px;
+    border-radius:0px;
+    background-image:url('graphics/back_arrow.png');
+    background-position: 3px center;
+    background-repeat:no-repeat;
+}
+
 @media only screen and (min-width:760px) {
     .viewNavigator_backButton {
+        text-align:right;
+        vertical-align:middle;
+        padding-right:10px;
+        padding-left:50px;
+        padding-top:9px;
+        height:26px;
+        color: #444;
+    }
+
+    .viewNavigator_mapButton {
         text-align:right;
         vertical-align:middle;
         padding-right:10px;

@@ -1,13 +1,41 @@
 <div id="filtersSerach">
-
-      <select name="transporte">
-		<option>Coche</option>
-		<option>Avión</option>
-		<option>Tren</option>
-	  </select>
-
-    <form>
-<input type="radio" name="sex" value="male">Male<br>
-<input type="radio" name="sex" value="female">Female
+  <form name="filter">
+  	<div class="row wrap">
+  		<div class="col-xs-12 ">
+  		<h3>Ciudad</h3>
+	  	<select class="filter-form" name="ciudad">
+	    	<option value="1">Tijuana</option>
+			<option value="2">San Diego</option>
+			<option value="3">Rosarito</option>
+			<option value="4">Ensenada</option>
+			<option value="5">San Francisco</option>
+		</select>	
+  	</div>
+  	<div class="col-xs-12">
+  		<h3>Rango de precio</h3>
+	    <select class="filter-form" name="precio">
+	    	<option value="4">$$$$</option>
+			<option value="3">$$$</option>
+			<option value="2">$$</option>
+			<option value="1">$</option>
+		</select>
+  	</div>
+	<div class="col-xs-12">
+		<h3>Calaificacion</h3>
+		<select class="filter-form" name="calificacion">
+			<option value="0">0 estrella</option>
+	    	<option value="1">1 estrella</option>
+	    	<option value="2">2 estrella</option>
+	    	<option value="3">3 estrella</option>
+	    	<option value="4">4 estrella</option>
+	    	<option value="5">5 estrella</option>
+		</select>
+	</div>
+	<div class="col-xs-12">
+		<input id="filter-button" class="filter-form" type=button value="Buscar" onclick="onSearchClick()"> 
+	</div>
+  	</div>
+  	
+	
 </form>
 </div>

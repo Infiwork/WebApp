@@ -151,3 +151,39 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	background-color: #ddd;
 }
+
+.viewNavigator_header_maplink {
+	position:absolute;
+	top:0px;
+	right:0px;
+	z-index:2;
+	
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    
+    max-width:30%;
+}
+
+.viewNavigator_mapButtonPosition {
+	position:absolute;
+	right: 5px;
+	top: .6em;
+}
+
+.viewNavigator_mapButton
+{
+	cursor:pointer;
+	display: inline-block;
+	white-space: nowrap;
+	background-color: #ccc;
+	border-radius: .2em;
+	padding: 4px 10px;
+	box-shadow: 0 0 1px 1px rgba(255,255,255,.8) inset, 0 1px 0 rgba(0,0,0,.3);
+}
+
+.viewNavigator_mapButton:active
+{
+	background-color: #ddd;
+}

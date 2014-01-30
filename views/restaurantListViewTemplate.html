@@ -1,10 +1,9 @@
 <div id="restaurantListView">
     {{#data}}
-    <div class="item-list" id="{{id}}">
+    <div class="item-list" id="{{id}}" data-mapa="{{mapa}}" data-name="{{nombre}}">
     	<div class="thumb-list" 
     	style="background-image:url('http://devel.globalisimo.com/globalisimov3/globalisimo_v1.5/upload/{{logo}}')">
     	</div>
-		
     	<h3>{{nombre}}</h3>
     </div>
     {{/data}}

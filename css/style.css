@@ -64,14 +64,7 @@ Estilos Globales
 .image-principal{
 	height: 120px;
 	transition:all .5s linear;
-}
-
-.see-more{
-	height: 200px;
-}
-
-.image-principal div{
-	height: 200px;
+	
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -149,6 +142,7 @@ Estilos Globales
 	float: left;
 	font-size: 15px;
 	margin-top: 10px;
+	overflow:hidden;
 }
 
 .item-list .thumb-list{
@@ -164,20 +158,24 @@ Estilos Globales
 
 /* 2.- View Filters*/
 
-.button {
+.filter-form {
+	border: 1px solid #4d4d4d;
+	text-shadow: 1px 1px 1px #6d6d6d;
 	display: block; 
 	font-size: 12px; 
-	text-decoration: none!important; 
+	margin:10px 0;
+	height: 40px;
+	background-color: #454545;
+	width: 50%;
 	font-family: Helvetica, Arial, sans serif;
 	padding: 8px 12px; 
+	text-decoration: none!important; 
 	border-radius: 3px; 
 	box-shadow: inset 0px 0px 2px #fff;
 	color: #fff;
-	border: 1px solid #4d4d4d;
-	text-shadow: 1px 1px 1px #6d6d6d;
-	background-color: #454545;}
+}
 
-.button:active, .active {
+#filter-button:active{
 	background-color: #222;
 	border: 1px solid #333;
 }

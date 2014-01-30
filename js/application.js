@@ -26,7 +26,7 @@ function setupDefaultView() {
     window.viewNavigator = new ViewNavigator( 'body' ); 
     window.viewNavigator.pushView( homeView );
     
-    $.getScript("data.js", scriptSuccess);
+    //$.getScript("data.js", scriptSuccess);
 }
 
 function onRestaurantCategoriesViewClick( event ) {
@@ -45,17 +45,47 @@ function onFiltersSearchViewClick( event ) {
            };
     window.viewNavigator.pushView( view );
     event.stopPropagation();
+    console.log("hola");
     return false;
 }
 
-function onFilterPriceClick(event){
-  console.log(event.target.dataset.price);
-  $(".button").toggleClass("active");
+function onSearchClick(){
+  var _cd = document.filter.ciudad.selectedIndex;
+  var _pr = document.filter.precio.selectedIndex;
+  var _cl = document.filter.calificacion.selectedIndex;
+  var cd = document.filter.ciudad.options[_cd].value;
+  var pr = document.filter.precio.options[_pr].value;
+  var cl = document.filter.calificacion.options[_cl].value;
+
+  console.log("ciudad "+cd+" precio "+pr+" calificacion "+cl);
+  $.ajax({
+        url: 'http://devel.globalisimo.com/globalisimov3/conex1.php?filtro=600&cd='+
+        cd+'&pr='+pr+'&cl='+cl,
+        dataType: 'jsonp',
+        jsonp: 'jsoncallback',
+        timeout: 5000,
+        success: function(data, status){
+          var view = { title: "Restaurantes",
+             backLabel: (isTablet() ? "Back" : " "),
+             mapLabel:(isTablet() ? "Back" : " " ),
+             view: viewAssembler.restaurantListView(data)
+           };
+            window.viewNavigator.pushView( view );
+        },
+        error: function(){
+            var view = { title: "Error",
+             backLabel: (isTablet() ? "Back" : " "),
+             view: viewAssembler.conectErrorView()
+           };
+           window.viewNavigator.pushView( view );
+        }
+    });
+    event.stopPropagation();
+    return false;
 }
 
-
 function onRestaurantListViewClick(event) {
-console.log("enter");
+  console.log("enter");
   var cat = event.target.id;
   if(!cat.length) 
     cat = event.target.parentElement.id;
@@ -67,6 +97,7 @@ console.log("enter");
         success: function(data, status){
           var view = { title: "Restaurantes",
              backLabel: (isTablet() ? "Back" : " "),
+             mapLabel:(isTablet() ? "Back" : " " ),
              view: viewAssembler.restaurantListView(data)
            };
             window.viewNavigator.pushView( view );
@@ -112,6 +143,44 @@ function onRestaurantViewClick(event) {
     return false;
 }
 
+function onMapList(){
+  var coords = new Array();
+  var name = new Array();
+  var point;
+  $('#restaurantListView .item-list').each(function(index){
+    coords[index] = $(this).data('mapa');
+    name[index]= $(this).data('name');
+  });
+
+  var view = { title: "Mapa",
+             backLabel: (isTablet() ? "Back" : " "),
+             view: viewAssembler.mapView()
+            };
+  window.viewNavigator.pushView( view );
+  event.stopPropagation();
+  var j=0;
+  while((coords[j].length)==0){
+    j++;
+    console.log(j);
+  }
+
+  point = coords[j].split(',');
+  var map = L.map('map-complete').setView([point[0],point[1]], 12);
+  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy;Globalisimo.com'
+  }).addTo(map);
+
+  for (var i = coords.length - 1; i >= 0; i--) {
+    if((coords[i].length)>0){
+      point = coords[i].split(',');
+      L.marker([point[0],point[1]]).addTo(map)
+      .bindPopup(name[i]);
+    }
+  };
+
+  return false;
+}
+
 function onNextToMeViewClick( event ) {
     var view = { title: "Cargando...",
              backLabel: (isTablet() ? "Back" : " "),
@@ -134,12 +203,10 @@ function onPanelCall(event){
     
     confirm(item);
           document.location.href = 'tel:+'+item;
-       
-  
 }
 
 function onImageMapClick(event){
-  console.log(event);
+  console.log("click ");
   /*var coords = (event.delegateTarget.dataset.coords);
   if(coords.length==0|| coords==''){
     confirm("Lo sentimos, no hay ubicación disonible");
@@ -167,16 +234,12 @@ function addMapImage(coords){
   L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy;Globalisimo.com'
   }).addTo(map);
-  console.log('entra y entra');
 
   map.on('click', function(e) {
-    console.log(e.latlng);
+    //console.log(e.latlng);
   });
 
   return false;
-}
-
-function addMapComplete(coords){
   
   var point = coords.split(',');
   var map = L.map('map-complete').setView([point[0],point[1]], 16);
